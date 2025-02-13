@@ -1,1 +1,111 @@
-# Oekce.github.io
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js" type="text/javascript"></script>  
+    <title>Валентинка</title>
+</head>
+<style>
+    body {
+        background-color: rgb(41, 35, 36);
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .heart {
+        position: absolute;
+        color: red;
+        font-size: 24px;
+        animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-100vh); opacity: 1; }
+        100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .message {
+        font-size: 2em;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        z-index: 2;
+    }
+
+    .black-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    canvas {
+        display: none;
+    }
+</style>
+<body>
+    <h1 class="press"></h1>
+    <div class="message" id="message">С Днём Святого Валентина! ❤️</div>
+    <div class="black-screen" id="blackScreen">
+        <canvas id="pinkboard"></canvas>
+    </div>
+
+    <script>
+        let Vopros = prompt("Ты мне нравишься, а я тебе?? Да или нет?");
+        
+        if (Vopros.toLowerCase() === "да") {  
+            document.body.style.backgroundColor = "pink";
+
+            const messages = [
+                "Ты для меня стала невероятно близким человеком",
+                "словно всю жизнь я тебя знал и ждал",
+                "когда ты даришь мне свое внимание",
+                "я будто не в себя от радости",
+                "Я благодарю жизнь за то, что наши дорожки пересеклись",
+                "Я люблю так, что нету слов",
+                "такой, какой ты есть"
+            ];
+            
+            let messageIndex = 0;
+            let heartsInterval = setInterval(createHeart, 200);
+
+            function changeMessage() {
+                if (messageIndex < messages.length) {
+                    document.getElementById("message").textContent = messages[messageIndex];
+                    messageIndex++;
+                } else {
+                    messageIndex = 0; // Снова начинаем с первого сообщения
+                    changeMessage();
+
+                }
+            }
+
+            // Теперь сообщения переключаются при клике в любом месте на экране
+            document.body.addEventListener("click", changeMessage);
+
+        } else {
+            document.getElementsByClassName("press")[0].textContent = " Ехх, жалко... 😢";
+        }
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+    </script>
+</body>
+</html>
